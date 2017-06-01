@@ -1,0 +1,112 @@
+=============================> Arrays
+
+Array.new
+#=> []           # [] is the representation of an empty array
+a = ['one', 'two', 3, 4, 'five']
+#=> ["one", "two", 3, 4, "five"]
+
+============================> Array as a Stack
+
+a = ['one', 'two', 3, 4, 'five']
+
+a.push 'six'       # push to add element at the end of the array
+#=> ["one", "two", 3, 4, "five", "six"]
+a.pop              # pop to take the last element
+#=> "six"
+a.pop              # taking the last element again
+#=> "five"
+a                  # array is shrinked, because we push 1 element and pop 2 of them
+#=> ["one", "two", 3, 4]
+
+=============================> Accessing Objects
+a = ['one', 'two', 3, 4, 'five']
+a.[](1)      # running method [] with argument 1 on object a
+#=> "two"
+a[1]         # alternate syntax to call method []
+#=> "two"
+a[1,1]       # second argument given - give me the array of 1 element starting from index 1
+#=> ["two"]      # note the result is not the same as fo a[1] - this returns 1-element array
+a[1,2]       # give me the subarray, starting from index number 1, with 2 elements
+#=> ["two", 3]
+a[-1]        # last elements
+#=> 4
+a[42]        # index out of range, returns nil
+#=> nil
+
+There more methods on Array objects.
+ length returns the number of elements,
+ first is the equivalent to [0],
+ last returns last object - just like [-1].
+ Method empty? returns true only when the array contains no elements.
+ find_index searches the whole array and returns the index of the first found object (array does not have to contain unique objects).
+ To find all the objects with a given patters, use grep
+
+
+ a = ['one', 'two', 3, 4, 'five']
+ a.length
+ #=> 4
+ a.first
+ #=> "one"
+ a.last
+ #=> 4
+ a.find_index 'two'   # search for the string 'two'
+ #=> 1                    # and returns the position of nil when not found
+ a.empty?
+ #=> false
+ ['foo', 'bar', 'foobar', 3.14].grep(/^foo.*/)  # /^foo.*/ is the Regular Expression,
+ #=> ["foo", "foobar"]                          # means: everything begins with string 'foo'
+
+ =========================> Modifying Array Content
+ a = ['one', 'two', 3, 4, 'five']
+
+ a[0] = 1
+ #=> 1
+ a
+ #=> [1, "two", 3, 4]
+
+##############   delete_at is the method to remove object at th given index
+
+ a = ['foo', 'bar', 'foobar', 3.14]
+ #=> ["foo", "bar", "foobar", 3.14]
+ a.delete_at 0            # notice that delete is not returning a new array, but the object
+ #=> "foo"
+ a
+ #=> ["bar", "foobar", 3.14]  # everything except first object
+ a.delete_at 7            # delete_at returns nil, when the index is out of range
+ #=> nil
+
+##############   To find the objects to be destroyed, use delete method: (0)
+ a = ['foo', 'bar', 'foobar', 3.14, 'foo']
+ #=> ["foo", "bar", "foobar", 3.14, "foo"]
+ a.delete('foo')           # notice that delete is not returning a new array, but the found object
+ #=> "foo"
+ a
+ #=> ["bar", "foobar", 3.14]   # array now contains everything except found 'foo'
+ a.delete('foo')           # if not found, delete returns nil
+ #=> nil
+
+===================> Array Operators
+[1, 2] + [3, 4]            # adding arrays
+#=> [1, 2, 3, 4]
+[1, 2, 3, 4, 1] - [1, 3]   # subtracting arrays
+#=> [2, 4]
+[1, 2] << 3                # add single element to the end
+#=> [1, 2, 3]
+[1, 2] == [1.0, 2]         # true, because 1 == 1.0 and 2 == 2
+#=> true
+[1, 2] == [1, 2, 3]        # false, the arrays are not equal because the second one is larger
+#=> false
+
+===================> Array Syntax Shortcut
+days = %w{ monday tuesday wednesday thursday friday saturday sunday }
+#=> ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+
+===================> Sorting
+[1, 3, 2, -1, 3].sort
+#=> [-1, 1, 2, 3, 3]
+[1, 3, 2, -1, 3].uniq
+#=> [1, 3, 2, -1]
+[1, 3, 2, -1, 3].sort.uniq  # first do sort, then uniq
+#=> [-1, 1, 2, 3]
+[1, 3, 2, -1, 3].uniq.sort  # the same, but faster: first get unique values, then sort the smaller array
+#=> [-1, 1, 2, 3]

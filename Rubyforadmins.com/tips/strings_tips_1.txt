@@ -1,0 +1,92 @@
+============>Strings
+puts 'Single \'quoted\' string.\nNo newline parsed.'  # \n is just a backslash and the letter n
+===>Single 'quoted' string.\nNo newline parsed.
+puts "Double \"quoted\" string.\nWith newline."       # escape double quotes with \"
+===>Double "quoted" string.
+===>With newline.
+"2 + 2 = #{ 2 + 2 }"       # Ruby evaluates the expression between #{ and }
+#=> "2 + 2 = 4"
+            # and puts the value of it inside
+ip = Ip.new(192, 168, 1, 1)
+#=> #<Ip:0x007fdd90820e90 @p1=192, @p2=168, @p3=1, @p4=1>
+"My IP is '#{ip}'"         # it could be any expression which returns string
+#=> "My IP is '192.168.1.1'"   # or have 'to_s' method defined
+
+============>String Formatting
+Another way to put some values inside the Ruby string is to use the % operator.
+It will construct the new Ruby string with given pattern and arguments.
+The pattern is similar to printf instruction in Bash, where
+%s means string,
+%d - decimal number,
+%f - floating point number,
+EXAMPLES:
+"The answer is %d" % 42     # simple substitution of the number
+#=> "The answer is 42"
+
+"The highest address in 8-bit Atari is %X" % 65535   # convert to hex
+#=> "The highest address in 8-bit Atari is FFFF"         # %x would give the lowercase characters
+
+"%d/%d equals to %.3f" % [5, 3, 5.0/3]   # more than one arguments - in Array
+#=> "5/3 equals to 1.667"                    # note the 5/3 is rounded
+
+"The answer for %<question>s is %<answer>d." % { question: 'everything', answer: 42 }
+#=> "The answer for everything is 42."
+
+
+The similar to % operator is the sprinf function.
+It returns string formatted with the pattern and attributes.
+There is a prinf method as well, but not widely used - most Rubyists prefer puts.
+In sprintf and printf, unlike in the % operator, you don't have to use Array to pass more than one arguments.
+
+EXAMPLES
+s = sprintf('42 in binary: %08B', 42)  # 08 - put leading zeros to fill 8 characters
+#=> "42 in binary: 00101010"
+printf("42 = %8B\n84 = %8B\n", 42, 84)
+42 =   101010
+84 =  1010100
+
+==============> Substrings
+
+s = "The ultimate answer"
+#=> "The ultimate answer"
+s[0]         # the first character
+#=> "T"
+s[4]         # the fifth character - counting from zero
+#=> "u"
+s[-1]        # the last one
+#=> "r"
+s[0..2]      # the range from the first to third
+#=> "The"
+s[4..11]     # from 5 to 12
+#=> "ultimate"
+s[-6..-1]    # from 6th from the end to the last one
+#=> "answer"
+s[4..11] = 'only true'   # replace the characters from 5 to twelve with a new substring
+#=> "only true"          # note this substitution returns the value on substring, not 's'
+s                        # string 's' is now modified
+#=> "The only true answer"
+
+==============> More String Operators
+'abc' >= 'abb'     # it is greater, because 'c' is greater than 'b' on the third position
+#=> true
+
+'foo' < 'fooz'     # the same beginnig, but 'fooz' is longer and wins
+#=> true
+
+s = 'foo'          # creating object 'foo' to play with
+#=> "foo"
+
+s + "bar"          # concatenation s with 'bar' produces 'foobar'
+#=> "foobar"
+
+s                  # but leaves the object untouched
+#=> "foo"
+
+s << "bar"         # and this operator will add 'foo' to the object 's'
+#=> "foobar"
+
+s                  # modified content of the object s
+#=> "foobar"
+
+"0123456789" * 8   # multiple the string 8 times
+#=> "01234567890123456789012345678901234567890123456789012345678901234567890123456789"

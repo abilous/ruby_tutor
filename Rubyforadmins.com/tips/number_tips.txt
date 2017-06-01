@@ -1,0 +1,55 @@
+42.class           # class of 42 object is Fixnum
+#=> Fixnum
+3.1415926.class    # but of the floating-point object it is Float
+#=> Float
+s = 42 + 3.1415926 # adding integer to real is possible and gives Float
+#=> 45.1415926
+s.class
+#=> Float
+s = 41 + 1.0       # to constrain the value of the expression is Float
+#=> 42.0
+s.class
+#=> Float              # division of two integers gives always integer
+42 / 5
+#=> 8
+42 / 5.0           # to ensure the value of division is a float
+#=> 8.4
+42.fdiv(5)         # or use fload-division method
+#=> 8.4
+
+'1/3'.to_r / Rational(1, 2)
+#=> (2/3)
+
+22.38404.round
+#=>22
+
+Methods and Operator on Numbers
+
+There is a number of methods and operators for numbers in Ruby. There is no need to describe all of them here, as there is everything about it in Ruby documentation, so let's focus on most interesting: (0)
+
+#    class - already known method returns class of the object; notice it is not returning string with its name, but actuall class, which is an object of type Class
+#    methods - this method refers not only to numbers but for all the objects in Ruby; it returns all the method names available for the given object instance
+#    zero? - methods ending with question mark usually returns true or false; this function checks if the number is zero (so 0.zero? is true)
+#    round - rounds to floating point number to the nearest fixed point
+#    == - equality operator allows to compare the numbers of different types: you do not have to bother with conversion. In Ruby 42 == 42.0 is true
+#    <=> comparition operator - often called "a spaceship operator": returns -1 if the object on the left is lesser than the object on the right, 1 - if the right object is greater and 0 if the objects are equal
+#    ** - this is a power operator in Ruby, so 2 ** 8 gives 256
+#    bitwise operators: & | ^ - & does binary AND, | is binary OR and ^ means XOR; so 0b1010 ^ 0b1001 == 0b0011
+#    to_s - converts current number to string
+#    to_i - converst the number to interger
+
+
+1.class
+#=> Fixnum         # the class of instance 1 is Fixnum
+1.class.class
+#=> Class          # the class of Fixnum (1.class) is Class
+3.14.methods
+#=> [:to_s, :inspect, :coerce, :-@, :+, :-, :*, :/, :quo, :fdiv, :%, :modulo, :divmod, :**, :==, :===, :<=>, :>, :>=, :<, :<=, :eql?, :hash, :to_f, :abs, :magnitude, :zero?, :to_i, :to_int, :floor, :ceil, :round, :truncate, :nan?, :infinite?, :finite?, :numerator, :denominator, :to_r, :rationalize, :arg, :angle, :phase, :singleton_method_added, :i, :+@, :div, :remainder, :real?, :integer?, :nonzero?, :step, :to_c, :real, :imaginary, :imag, :abs2, :rectangular, :rect, :polar, :conjugate, :conj, :pretty_print_cycle, :pretty_print, :between?, :pretty_print_instance_variables, :pretty_print_inspect, :nil?, :=~, :!~, :class, :singleton_class, :clone, :dup, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?, :remove_instance_variable, :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to?, :extend, :display, :method, :public_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :pretty_inspect, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__]
+0.5.round
+#=> 1
+0.49.round
+#=> 0
+10.0.to_i
+#=> 10
+10.0.to_s
+#=> "10.0"

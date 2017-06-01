@@ -1,0 +1,43 @@
+Hash is the another collection of objects.
+It is quite similar to array - it may contain a variety of objects.
+The difference is the index: in the array the index is a positive integer,
+in hashes the index could be any object (for the record: any hashable object).
+We call the index key, so we can say that Hash object is a collection of pairs: key, value.
+
+=================> Hash Syntax
+h = {1=>'one', 3=>'three', 'four'=>4, 2=>'two'}
+#=> {1=>"one", 3=>"three", "four"=>4, 2=>"two"}
+
+=================> Accessing Hashes
+h = {1=>'one', 3=>'three', 'four'=>4, :two=>'two'}
+#=> {1=>"one", 3=>"three", "four"=>4, :two=>"two"}
+h[1]           # get object with key integer 1
+#=> "one"
+h["four"]      # get value of key string "four"
+#=> 4
+h[:two]="too"  # change the value of key :two
+#=> "too"
+h[:four]=4.0   # add a new entry: :four =>
+#=> 4.0
+h              # notice that "four" and :four are not the same keys
+#=> {1=>"one", 3=>"three", "four"=>4, :two=>"too", :four=>4.0}
+
+=================> Symbols as Hashes Keys
+h = {one: 1, two: 2, three: 'three'}
+#=> {:one=>1, :two=>2, :three=>"three"}
+
+=================> Default Hash Value
+
+Hash returns nil, if key is not found.
+You can change this default value by adding a parameter to Hash.new constructor or use default method. (0)
+
+h[:forty_two]
+#=> nil              # key not found
+h.default = 42   # change the default value
+#=> 42
+h[:forty_two]    # hash returns default value when key not found
+#=> 42
+empty = Hash.new('forty two')  # another way to set up the default value
+#=> {}
+empty[42]                      # hash returns default value when key not found
+#=> "forty two"

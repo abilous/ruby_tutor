@@ -1,0 +1,41 @@
+BOOLEANS
+
+true || false        # true OR false
+#=> true
+true && false        # true AND false
+#=> false
+!true                # NOT true
+#=> false
+2 > 1.0
+#=> true
+3 == 3
+#=> true
+2 > 1.0 && 3 == 3    # first to evaluate comparisons (> and ==),
+#=> true                 # and then do a logical AND with results of comparitions
+
+
+NIL
+
+!nil           # NOT nil is true
+#=> true
+nil && true    # nil AND true is nil
+#=> nil
+nil && false   # nil AND false is nil
+#=> nil
+nil || true    # nil OR true is true
+#=> true
+nil || false   # nil OR false is false
+#=> false
+
+There is a method called nil? to check if the object is the nil. Obviously only nil returns true from this method:
+
+nil.nil?     # nil is nil
+#=> true
+0.nil?       # zero is not nil
+#=> false
+false.nil?   # and false is not nil as well
+#=> false
+
+Such behaviour is very important in Ruby world.
+In all the conditional expressions (if-than-else, while, select-case) everything evaluates to true, except false and nil.
+Unlike in the other languages, zero, empty string, empty array evaluates to true.

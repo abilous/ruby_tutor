@@ -1,0 +1,120 @@
+String Methods
+ Here are the most interesting String methods.
+ Notice that many of them are provided with two variants - returning new objects or modifying existing one. (0)
+
+    length - returns integer with string size (number of characters, not bytes - it may not to be the same for non-ascii strings, like UTF-8
+    bytesize - the size of the string, in bytes
+    chomp, chomp! - drops newlines and carriage returns at the end of the string
+    chop, chop! - removes the last character
+    crypt(salt) - creates one-way cryptographic hash (like encoded password in /etc/passwd) with the given salt
+    downcase, downcase! - downcase the content of the string
+    upcase, upcase! - converts the string to uppercase
+    empty? - returns true, if the string has zero length
+    include?(other_string) - true, if the string includes the other one
+    index(other_string) - returns the index of first occurence of the other one or nil if not found
+    rindex(other_string) - the index of last occurence, or nil
+    insert(index, other_string) - inserts other_string at the specified index (note this method modifies the content of the string and it is not finished by exclamation: this is because its name cleary idicates, that the string will be changed)
+    lstrip, lstrip! - removes leading whitespaces (spaces, tabs)
+    rstrip, rstrip! - trailing whitespaces to be removed
+    strip, strip! - deletes whitespaces from both left and right side
+    reverse, reverse! - reverse the string
+    split(delimiter) - divides the string to a substrings, based on delimiter (like awk -F'delimiter')
+    tr(from, to), tr!(from_characters, to_string) - just like Unix tr command, changes all characters in the first argument to the string given in the second argument
+
+s = "200\u20ac"  # '\u' is an escape Unicode characters in Ruby strings: \uXXXX, where XXXX is hex code for the character
+#=> "200\u20AC"      # 20AC (hex) is an euro sign (€) in Unicode
+puts s           # puts does not escape the non-ascii characters
+200€
+s.length         # '200€' is 4-characters string
+#=> 4
+s.bytesize       # but in memory occupies 6 bytes
+#=> 6
+
+s = "Hello world.\r\n" # CRLF at the end of the string
+#=> "Hello world.\r\n"
+s.chomp                # chomp removes CR and LF, creates a new string object and returns it
+#=> "Hello world."
+s                      # but the variable 's' remains untouched
+#=> "Hello world.\r\n"
+s.chomp!               # chomp! removes CRLF from existing object
+#=> "Hello world."
+s                      # variable 's' has been modified
+#=> "Hello world."
+
+'secret'.crypt('salt') # creates one-way hash for the string 'secret' (similar way how /etc/passwd keeps the hashes)
+#=> "saHW9GdxihkGQ"
+
+'small'.upcase  # uppercase the string, method upcase! would modify the object itself
+#=> "SMALL"
+'Big'.downcase  # lowecase the string 'Big'
+#=> "big"
+
+"".empty?       # only "" is an empty string
+#=> true
+
+"Hello world".include? "Hell"          # search for a substring 'Hell'
+#=> true
+"Hello world".include? "hell"          # all functions are case-sensitive
+#=> false
+"Hello world".downcase.include? "hell" # to do a case-insensitive search, just lowecase the object first
+#=> true                                   # so the method 'include?' will search on the lowecased object
+
+"Hello world".index 'o'    # first occurrence of 'o' is on 4th, counting from zero, position
+#=> 4
+"Hello world".rindex 'o'   # last occurrence of 'o' is on 7th, counting from zero
+#=> 7
+
+"Hello world".insert(5, ' cruel')  # inserts substring into 5th position (from zero)
+#=> "Hello cruel world"
+
+" Hello  \n".lstrip   # removes whitespaces from the left
+#=> "Hello  \n"
+" Hello  \n".rstrip   # all trailing whitespaces, including newline, to be removed
+#=> " Hello"
+" Hello  \n".strip    # remove both from the beginning and from the end
+#=> "Hello"
+
+"kayak ".reverse      # create new string by reversing the given object
+#=> " kayak"
+
+"Jun 17 02:47:59 joe kernel[0]".split         # splits the string with default delimiter (whitespace)
+#=> ["Jun", "17", "02:47:59", "joe", "kernel[0]"]
+"02:47:59".split(":")                         # and with given delimiter
+#=> ["02", "47", "59"]
+
+'Hello world'.tr 'aeiouy', '*'  # change any of chars: 'aeiouy' with star
+#=> "H*ll* w*rld"
+'Hello world'.tr 'a-z', '*'     # change all lowercase letters to stars
+#=> "H**** *****"
+
+=================> Instances and Reference
+Strings, like everything in Ruby, are objects,
+but it is important to understand that even the same literals are not the same object instances:
+
+'string'.object_id     # construct the first 'string' object
+#=> 70281130395700
+
+'string'.object_id     # the second one, different than the previous one
+#=> 70281130382560
+
+'string'.object_id == 'string'.object_id   # there are the different objects
+#=> false
+
+'string' == 'string'   # but comparition works as expected
+#=> true
+
+It is worth to make a note about the reference.
+In Ruby, variables contains references to the object, not the objects themselves.
+Thus, while assigning one variable to other, only the reference is copied.
+In the example below both variables refers to the same object in the memory. (0)
+
+a = 'string'                 # a is the reference to object 'string'
+#=> "string"
+
+b = a                        # b is the reference to the same object 'string'
+#=> "string"
+
+a.object_id == b.object_id   # true, because a and b referes to the same object,
+#=> true
+
+=================> Symbols
